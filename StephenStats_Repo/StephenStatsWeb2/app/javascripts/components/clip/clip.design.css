@@ -1,0 +1,17 @@
+.clip{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
+
+input{
+	width: 80%;
+	height: 5px;
+	
+}
+
+.clip2{
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+}

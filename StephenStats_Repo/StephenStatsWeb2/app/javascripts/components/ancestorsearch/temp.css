@@ -1,0 +1,15 @@
+/*Ancestor Search Page*/
+.searchBox {
+	color: blue;
+	font-size: 35;
+	display: flex; /*moves the search box above words.*/
+	text-align: center;
+}
+
+/*General*/
+.searchWrapper {
+	color: blue;
+	font-size: 35;
+	display: flex; /*moves the search box above words.*/
+	text-align: right;
+}

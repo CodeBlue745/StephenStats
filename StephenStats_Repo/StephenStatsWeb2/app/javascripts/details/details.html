@@ -1,0 +1,44 @@
+<!-- On this page, I want the Search bar, large buttons 
+linking to all other pages with pictures on them, and maybe a side bar, header, and footer. -->
+
+
+<link rel="stylesheet" type="text/css" href="/mainstyles.css" >
+<link rel="stylesheet" type="text/css" href="/mainstyles.css" >
+<div class = "roduct-name">
+		<p onclick="activateParagraph">Hello world</p>
+		<p>hello</p>
+		<h1>world</h1>
+	<script src="home.js"></script>
+
+
+
+	<div class="modal-footer">
+		<div name="buttonGroup" class="submit-btn-group">
+			<button name="submit" class="btn btn-primary" type="submit"
+				ng-click="$ctrl.savePatientAndAdmit()"
+				ng-disabled="($ctrl.submitBtnDisabled || $ctrl.existingPatientFlag) && !$ctrl.adtPatient"
+				tabindex="13">Submit</button>
+				
+				
+				
+				
+			<button class="btn btn-danger" type="button"
+				ng-click="$ctrl.openDeleteAdmitModal($ctrl.patient.admitId)"
+				ng-if="$ctrl.editAdmitFlag" tabindex="14">Delete</button>
+				
+				
+				
+				
+			<button name="reset" class="btn btn-default" type="button"
+				ng-if="!$ctrl.editPatientFlag && !$ctrl.editAdmitFlag && !$ctrl.readmitFlag"
+				ng-click="$ctrl.reset()" tabindex="15">Reset</button>
+				
+				
+				
+				
+			<button name="cancel" class="btn btn-default" type="button"
+				ng-click="$ctrl.cancel()" tabindex="16">Cancel</button>
+		</div>
+
+	</div>
+</div>

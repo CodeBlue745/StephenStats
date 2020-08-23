@@ -1,0 +1,341 @@
+<!--  <form name="$ctrl.form" novalidate>
+    <div>
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Add/Edit Classification</h3>
+        </div>
+        <div class="modal-body classification-modal-body" id="modal-body">
+            <div>
+                <p ng-show="$ctrl.showMessage"><label class="has-error">{{$ctrl.message}}</label></p>
+            </div>
+            <div>
+                <label>Treatment Category <span class="required-red">*</span></label>
+                <select ng-model="$ctrl.classification.treatmentCategory"
+                        name="treatmentCategory"
+                        class="form-control"
+                        ng-change="$ctrl.treatmentCategoryChange()" tabindex="1"
+                        required ng-disabled="$ctrl.editFlag">
+                    <option ng-repeat="tc in $ctrl.treatmentCategories" value="{{tc.id}}">{{tc.name}}
+                    </option>
+                </select>
+                <div ng-show="$ctrl.form.$submitted || $ctrl.form.treatmentCategory.$touched">
+                    <label ng-show="$ctrl.form.treatmentCategory.$error.required" class="has-error">Treatment
+                        Category is required!</label>
+                </div>
+            </div>
+            <div ng-show="$ctrl.showClassificationOption" class="margin-top-20">
+            <label>Classification <span class="required-red">*</span></label>
+                <div ng-show="$ctrl.isSurgical && !$ctrl.isTraumatic && !$ctrl.isNonTraumatic && !$ctrl.isLymphedema && !$ctrl.isLymphedemaSecondary && !$ctrl.isTorticollis && !$ctrl.isTransplant && !$ctrl.isNonTransplant">
+                    <select class="form-control" name="classification1" ng-model="$ctrl.classification.classId"
+                        required ng-disabled="$ctrl.editFlag" tabindex="2">
+                        <option ng-repeat="c in $ctrl.classifications.SURGICAL" value="{{c.classificationId}}">
+                            {{c.classificationText}}
+                        </option>
+                    </select>
+                </div>                
+	            <div ng-show="!$ctrl.isSurgical && !$ctrl.isTraumatic && !$ctrl.isNonTraumatic && !$ctrl.isLymphedema && !$ctrl.isLymphedemaSecondary && !$ctrl.isTorticollis && !$ctrl.isTransplant && !$ctrl.isNonTransplant">
+	                    <select class="form-control" name="classification2"
+	                        ng-model="$ctrl.classification.classId" tabindex="2"
+	                        required ng-disabled="$ctrl.editFlag">
+	                        <option ng-repeat="c in $ctrl.classifications.NONSURGICAL"
+	                                value="{{c.classificationId}}" >
+	                            {{c.classificationText}}
+	                        </option>
+	                    </select>
+                 </div>  
+	             <div ng-show="$ctrl.isTraumatic">
+	                    <select class="form-control" name="classification2"
+	                        ng-model="$ctrl.classification.classId" tabindex="2"
+	                        required ng-disabled="$ctrl.editFlag">
+	                        <option ng-repeat="c in $ctrl.classifications.TRAUMATIC"
+	                                value="{{c.classificationId}}" >
+	                            {{c.classificationText}}
+	                        </option>
+	                    </select>
+	                </div>
+	             <div ng-show="$ctrl.isNonTraumatic">
+	                    <select class="form-control" name="classification2"
+	                        ng-model="$ctrl.classification.classId" tabindex="2"
+	                        required ng-disabled="$ctrl.editFlag">
+	                        <option ng-repeat="c in $ctrl.classifications.NONTRAUMATIC"
+	                                value="{{c.classificationId}}" >
+	                            {{c.classificationText}}
+	                        </option>
+	                    </select>
+	             </div> 
+	             <div ng-show="$ctrl.isLymphedema">
+	                    <select class="form-control" name="classification2"
+	                        ng-model="$ctrl.classification.classId" tabindex="2"
+	                        required ng-disabled="$ctrl.editFlag">
+	                        <option ng-repeat="c in $ctrl.classifications.LYMPHEDEMA"
+	                                value="{{c.classificationId}}" >
+	                            {{c.classificationText}}
+	                        </option>
+	                    </select>
+	             </div>           
+	             <div ng-show="$ctrl.isLymphedemaSecondary">
+	                    <select class="form-control" name="classification2"
+	                        ng-model="$ctrl.classification.classId" tabindex="2"
+	                        required ng-disabled="$ctrl.editFlag">
+	                        <option ng-repeat="c in $ctrl.classifications.LYMPHEDEMASECONDARY"
+	                                value="{{c.classificationId}}" >
+	                            {{c.classificationText}}
+	                        </option>
+	                    </select>
+	             </div> 
+	             <div ng-show="$ctrl.isTorticollis">
+	                    <select class="form-control" name="classification2"
+	                        ng-model="$ctrl.classification.classId" tabindex="2"
+	                        required ng-disabled="$ctrl.editFlag">
+	                        <option ng-repeat="c in $ctrl.classifications.TORTICOLLIS"
+	                                value="{{c.classificationId}}" >
+	                            {{c.classificationText}}
+	                        </option>
+	                    </select>
+	             </div>             
+	                <div ng-show="$ctrl.isTransplant">
+	                    <select class="form-control" name="classification2"
+	                        ng-model="$ctrl.classification.classId" tabindex="2"
+	                        required ng-disabled="$ctrl.editFlag">
+	                        <option ng-repeat="c in $ctrl.classifications.TRANSPLANT"
+	                                value="{{c.classificationId}}" >
+	                            {{c.classificationText}}
+	                        </option>
+	                    </select>
+	             </div>  
+	             <div ng-show="$ctrl.isNonTransplant">
+	                    <select class="form-control" name="classification2"
+	                        ng-model="$ctrl.classification.classId" tabindex="2"
+	                        required ng-disabled="$ctrl.editFlag">
+	                        <option ng-repeat="c in $ctrl.classifications.NONTRANSPLANT"
+	                                value="{{c.classificationId}}" >
+	                            {{c.classificationText}}
+	                        </option>
+	                    </select>
+                 </div>       
+                <div ng-show="$ctrl.form.$submitted || $ctrl.form.classification1.$touched || $ctrl.form.classification2.$touched">
+                    <label ng-show="$ctrl.form.classification1.$error.required || $ctrl.form.classification2.$error.required"
+                            class="has-error">Classification is required!</label>
+                </div>
+            </div>
+            <div class="date-options-container">
+                <div ng-show="$ctrl.isSurgical" class="classification-date-div">
+                    <label>Surgery Date <span class="required-red">*</span></label>
+                    <div class="input-group">
+                        <input type="text" name="surgeryDate" class="form-control"
+                                uib-datepicker-popup="{{$root.format}}"
+                                ng-model="$ctrl.classification.surgeryDate"
+                                is-open="$root.popup1.opened"
+                                datepicker-options="$root.dateOptions"
+                                required close-text="Close" tabindex="3"/>
+                        <span class="input-group-btn">
+                                <button type="button" class="btn btn-default dp-btn" ng-click="$root.open1()">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                    </div>
+                    <div ng-show="$ctrl.form.$submitted || $ctrl.form.surgeryDate.$touched">
+                        <label ng-show="$ctrl.form.surgeryDate.$error.required" class="has-error">Surgery Date
+                            is required!</label>
+                    </div>
+                </div>
+                <div ng-show="!$ctrl.isSurgical" class="classification-date-div">
+                    <label>Date of Injury/Onset <span class="required-red">*</span></label>
+                    <div class="input-group">
+                        <input type="text" name="injuryDate" class="form-control"
+                                uib-datepicker-popup="{{$root.format}}"
+                                ng-model="$ctrl.classification.injuryDate"
+                                is-open="$root.popup1.opened"
+                                datepicker-options="$root.dateOptions"
+                                required close-text="Close" tabindex="3"/>
+                        <span class="input-group-btn">
+                                <button type="button" class="btn btn-default dp-btn" ng-click="$root.open1()">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                    </div>
+                    <div ng-if="$ctrl.form.$submitted || $ctrl.form.injuryDate.$touched">
+                        <label ng-if="$ctrl.form.injuryDate.$error.required" class="has-error">Injury Date is required!</label>
+                        <label ng-if="$ctrl.form.injuryDate.$error.date" class="has-error">Injury Date is Invalid!</label>
+                    </div>
+                </div>
+                <div class="prev-div">
+                	<label ng-show="!$ctrl.isTransplant && !$ctrl.isNonTransplant" ># of previous episodes/surgeries</label>
+                   	<label ng-show="$ctrl.isTransplant || $ctrl.isNonTransplant" ># of previous chemo rounds</label>
+                    <select ng-model="$ctrl.classification.previousEpisodesCount" name="previousEpisodesCount"
+                            class="form-control" tabindex="4">
+                        <option ng-repeat="p in $ctrl.previousEpisodesOptions" value="{{p}}">
+                            {{p}}
+                        </option>
+                    </select>
+                </div>
+                <div class="primary-div">
+                    <label>Primary Classification <span class="required-red">*</span></label>
+                    <br/>
+                    <div class="primary-classification-container">
+                        <label class="primary-classification-label">
+                            <input class="primary-classification-input" type="radio" name="primaryClassification" value="yes"
+                                ng-model="$ctrl.classification.primaryClassification" required tabindex="5"/>
+                            Yes
+                        </label>
+                        <label class="primary-classification-label">
+                            <input class="primary-classification-input" type="radio" name="primaryClassification" value="no"
+                                ng-model="$ctrl.classification.primaryClassification" required tabindex="6"/>
+                            No
+                        </label>
+                    </div>
+                    <div ng-show="$ctrl.form.$submitted || $ctrl.form.primaryClassification.$touched">
+                        <label ng-show="$ctrl.form.primaryClassification.$error.required" class="has-error">Primary
+                            Classification is required!</label>
+                    </div>
+                </div>
+            </div>-->
+            <!--<div ng-if="$ctrl.isHip" class="panel panel-default hip-surgical-panel">
+                <div class="panel-heading chronic-pain-heading">
+                    Additional Hip Surgical Questions
+                </div>
+                <div class="panel-body">
+                    <div class="hip-surgical-container">
+                        <div class="hip-prev-div">
+                            <label>Involved side: # of previous surgeries <span class="required-red">*</span></label>
+                            <select ng-model="$ctrl.classification.hipSurgeryNo" name="hipSurgeryNo"
+                                    class="form-control" required tabindex="7">
+                                <option ng-repeat="p in $ctrl.previousEpisodesOptions" value="{{p}}">
+                                    {{p}}
+                                </option>
+                            </select>
+                            <div ng-show="$ctrl.form.$submitted || $ctrl.form.hipSurgeryNo.$touched">
+                                <label ng-show="$ctrl.form.hipSurgeryNo.$error.required" class="has-error"># of
+                                    previous surgeries is required!</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Revisions <span class="required-red">*</span></label>
+                            <select ng-model="$ctrl.classification.hipRevisionNo" name="hipRevisionNo"
+                                    class="form-control" required tabindex="8">
+                                <option ng-repeat="h in $ctrl.hipRevisionOptions" value="{{h}}">
+                                    {{h}}
+                                </option>
+                            </select>
+                            <div ng-show="$ctrl.form.$submitted || $ctrl.form.hipRevisionNo.$touched">
+                                <label ng-show="$ctrl.form.hipRevisionNo.$error.required" class="has-error">Revisions is required!</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <!--  
+            <div ng-if="$ctrl.isTorticollis" class="panel panel-default hip-surgical-panel">
+               
+                <div class="panel-body">
+                    <div class="hip-surgical-container">
+                          <label>Prematurity (&lt;36 weeks) <span class="required-red">*</span></label>
+                    <br/>
+                    <div class="primary-classification-container">
+                        <label class="primary-classification-label">
+                            <input class="primary-classification-input" type="radio" name="torticollisClassification" value="yes"
+                                ng-model="$ctrl.classification.torticollisClassification" required tabindex="5"/>
+                            Yes
+                        </label>
+                        <label class="primary-classification-label">
+                            <input class="primary-classification-input" type="radio" name="torticollisClassification" value="no"
+                                ng-model="$ctrl.classification.torticollisClassification" required tabindex="6"/>
+                            No
+                        </label>
+                    </div>
+                    <div ng-show="$ctrl.form.$submitted || $ctrl.form.torticollisClassification.$touched">
+                        <label ng-show="$ctrl.form.torticollisClassification.$error.required" class="has-error">Prematurity 
+                            is required!</label>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="$ctrl.isTransplant" class="classification-date-div">
+                    <label>Transplant Date <span class="required-red">*</span></label>
+                    <div class="input-group">
+                        <input type="text" name="transplantDate" class="form-control"
+                                uib-datepicker-popup="{{$root.format}}"
+                                ng-model="$ctrl.classification.transplantDate"
+                                is-open="$root.popup2.opened"
+                                datepicker-options="$root.dateOptions"
+                                required close-text="Close" tabindex="3"/>
+                        <span class="input-group-btn">
+                                <button type="button" class="btn btn-default dp-btn" ng-click="$root.open2()">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                    </div>
+                    <div ng-if="$ctrl.form.$submitted || $ctrl.form.transplantDate.$touched">
+                        <label ng-if="$ctrl.form.transplantDate.$error.required" class="has-error">Transplant Date is required!</label>
+                        <label ng-if="$ctrl.form.transplantDate.$error.date" class="has-error">Transplant Date is invalid!</label>
+                    </div>
+              </div>
+            <div ng-show="$ctrl.isLumbar" class="margin-top-20">
+                <label>Symptoms distal to the knee? <span class="required-red">*</span></label>
+                <br/>
+                <div class="lumbar-classification-container">
+                    <label class="lumbar-classification-label">
+                        <input class="lumbar-classification-input" type="radio" name="symptoms" value="yes"
+                            ng-model="$ctrl.classification.symptoms" required tabindex="7"/>
+                        Yes
+                    </label>
+                    <label class="lumbar-classification-label">
+                        <input class="lumbar-classification-input" type="radio" name="symptoms" value="no"
+                            ng-model="$ctrl.classification.symptoms" required tabindex="8"/>
+                        No
+                    </label>
+                </div>
+                <div ng-show="$ctrl.form.$submitted || $ctrl.form.symptoms.$touched">
+                    <label ng-show="$ctrl.form.symptoms.$error.required" class="has-error">Symptoms distal
+                        to the knee is required!</label>
+                </div>
+            </div>
+            <div class="panel panel-default margin-top-20">
+                <div class="panel-heading chronic-pain-heading">Chronic Pain
+                    Assessment
+                </div>
+                <div class="panel-body">
+                    <div class="chronic-pain-container"> 
+                        <div>
+                            <label>Duration of pain symptoms <span class="required-red">*</span></label>
+                            <div class="pain-classification-container">
+                                <label class="pain-classification-label" ng-repeat="d in $ctrl.durationPainSymptoms">
+                                    <input class="pain-classification-input" type="radio" ng-model="$ctrl.classification.duration"
+                                    name="duration"
+                                    required ng-change="$ctrl.calculateChronicPainStatus()" ng-value="d.id" tabindex="9"/>
+                                    {{d.duration}}
+                                </label>
+                            </div>
+                            <div ng-show="$ctrl.form.$submitted || $ctrl.form.duration.$touched">
+                                <label ng-show="$ctrl.form.duration.$error.required" class="has-error">Duration
+                                    of pain symptoms is required!</label>
+                            </div>
+                        </div>
+                        <div ng-show = "$ctrl.showFrequencies" class="margin-top-20"> 
+                            <label>How often has the pain interfered with regular daily activities during the past 6 months?</label>
+                            <div class="pain-classification-container">
+                                <label class="pain-classification-label" ng-repeat="f in $ctrl.frequencies">
+                                    <input class="pain-classification-input" type="radio" ng-model="$ctrl.classification.frequency"
+                                    name="frequency" required ng-change="$ctrl.calculateChronicPainStatus()" value="{{f.id}}" tabindex="10"/>
+                                    {{f.frequency}}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="margin-top-20">
+                            <label>{{$ctrl.chronicPainStatusMessage}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-click="$ctrl.saveClassification()" tabindex="11">Submit</button>
+            <button class="btn btn-danger" type="button" ng-click="$ctrl.openDeleteClassificationModal($ctrl.classification.classificationId)"
+                ng-show="$ctrl.editFlag" tabindex="12">
+                Delete
+            </button>
+            <button class="btn btn-default" ng-click="$ctrl.reset()" ng-show="!$ctrl.editFlag" tabindex="13">Reset</button>
+            <button class="btn btn-default" ng-click="$ctrl.cancel()" tabindex="14">Cancel</button>
+        </div>
+    </div>
+</form>
+-->

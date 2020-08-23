@@ -1,0 +1,250 @@
+<!--  <div>
+    <form name="$ctrl.form" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">{{$ctrl.modalTitle}}</h3>
+        </div>
+        <div class="modal-body" id="modal-body" style="display:flex; justify-content:space-around">
+            <table>
+                <tr>
+                    <td>
+                        <label>Patient MRN
+                            <span style="color:red">*</span>
+                        </label>
+                        <input type="number" name="patientId" class="form-control" style="width: 300px;" ng-model="$ctrl.patient.empi" integer ng-blur="$ctrl.checkPatientExists()"
+                            placeholder="Patient MRN" min="1" max="999999999999999" maxlength="15" required ng-disabled="$ctrl.readmitFlag || $ctrl.editAdmitFlag"
+                            ng-change="$ctrl.empiChange()" tabindex="1" />
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.patientId.$touched">
+                            <label ng-if="$ctrl.form.patientId.$error.required" class="has-error">Patient MRN is required!
+                            </label>
+                            <label ng-if="$ctrl.form.patientId.$error.integer" class="has-error">Patient MRN is not a valid number!</label>
+                            <label ng-if="$ctrl.form.patientId.$error.min || $ctrl.form.patientId.$error.max" class="has-error">Patient MRN must be in range 1 to 999,999,999,999,999</label>
+                        </div>
+                        <div ng-if="($ctrl.existingPatientFlag && !$ctrl.editPatientFlag && !$ctrl.adtPatient)">
+                            <label class="has-error">Patient already exists.
+                                <br>Click to
+                                <a ng-click="$ctrl.readmit()">re-admit</a> this patient.</label>
+                        </div>
+                        <div ng-if="($ctrl.existingPatientFlag && $ctrl.editPatientFlag)">
+                            <label class="has-error">Patient already exists.</label>
+                        </div>
+                    </td>
+                    <td ng-if="!$ctrl.editPatientFlag" style="width: 30px">&nbsp;</td>
+                    <td ng-if="!$ctrl.editPatientFlag">
+                        <label>FIN # <span style="color:red">*</span></label>
+                        <input type="number" name="accountNo" class="form-control" style="width: 300px;"
+                               ng-model="$ctrl.patient.accountNo"
+                               placeholder="FIN #" min="1" max="999999999999" maxlength="12" integer required 
+                               ng-pattern="/^[1-9]+[0-9]*$/" tabindex="7"/>
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.accountNo.$touched">
+                            <label ng-if="$ctrl.form.accountNo.$error.integer || $ctrl.form.accountNo.$error.number" class="has-error">FIN # is not
+                                a valid number!</label>
+                            <label ng-if="$ctrl.form.accountNo.$error.min || $ctrl.form.accountNo.$error.max"
+                                   class="has-error">FIN # must be between 1 to 12 numbers!</label>
+                            <label ng-if="$ctrl.form.accountNo.$error.required" class="has-error">FIN # is required!</label>
+                            <label ng-if="$ctrl.form.accountNo.$error.pattern" class="has-error">
+                                FIN # must start with a number between 1 and 9!</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Gender
+                            <span style="color:red">*</span>
+                        </label>
+                        <div>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="1" ng-model="$ctrl.patient.sexCd" ng-required="true" ng-disabled="($ctrl.existingPatientFlag && !$ctrl.editPatientFlag) || $ctrl.readmitFlag || $ctrl.editAdmitFlag"
+                                    tabindex="2" /> Male
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="2" ng-model="$ctrl.patient.sexCd" ng-required="true" ng-disabled="($ctrl.existingPatientFlag && !$ctrl.editPatientFlag) || $ctrl.readmitFlag || $ctrl.editAdmitFlag"
+                                    tabindex="3" /> Female
+                            </label>
+                        </div>
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.gender.$touched">
+                            <label ng-if="$ctrl.form.gender.$error.required" class="has-error">Gender is required!
+                            </label>
+                        </div>
+                    </td>
+                    <td ng-if="!$ctrl.editPatientFlag" style="width: 30px">&nbsp;</td>
+                    <td ng-if="!$ctrl.editPatientFlag">
+                        <label>Admission Date
+                            <span style="color:red">*</span>
+                        </label>
+                        <p class="input-group">
+                            <input type="text" class="form-control" name="admDate" ng-model="$ctrl.patient.admDate" is-open="$root.popup2.opened" placeholder="Admission Date"
+                                datepicker-options="$root.dateOptions" uib-datepicker-popup="{{$root.format}}" close-text="Close" required
+                                tabindex="8" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default dp-btn" ng-click="$root.open2()">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                            <div ng-if="$ctrl.form.$submitted || $ctrl.form.admDate.$touched">
+                                <label ng-if="$ctrl.form.admDate.$error.required" class="has-error">Admission Date is required!</label>
+                                <label ng-if="$ctrl.form.admDate.$error.date" class="has-error">Admission Date is Invalid!</label>
+                            </div>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Last Name
+                            <span style="color:red">*</span>
+                        </label>
+                        <input type="text" name="lastName" class="form-control" style="width: 300px;" ng-model="$ctrl.patient.lastNm" maxlength="50"
+                            placeholder="Last Name" required ng-disabled="($ctrl.existingPatientFlag && !$ctrl.editPatientFlag) || $ctrl.readmitFlag || $ctrl.editAdmitFlag"
+                            tabindex="4" />
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.lastName.$touched">
+                            <label ng-if="$ctrl.form.lastName.$error.required" class="has-error">Last Name is required!
+                            </label>
+                        </div>
+                    </td>
+                    <td ng-if="!$ctrl.editPatientFlag" style="width: 30px">&nbsp;</td>
+                    <td ng-if="!$ctrl.editPatientFlag">
+                        <therapist-list patient="$ctrl.patient" on-update="$ctrl.updateObject(patient, prop, value)"></therapist-list>
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.therapist.$touched">
+                            <label ng-if="$ctrl.form.therapist.$error.required" class="has-error">Treating Therapist is required!
+                            </label>
+                        </div>
+                    </td>                   
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>First Name
+                            <span style="color:red">*</span>
+                        </label>
+                        <input type="text" name="firstName" class="form-control" style="width: 300px;" ng-model="$ctrl.patient.firstNm" maxlength="50"
+                            placeholder="First Name" required ng-disabled="($ctrl.existingPatientFlag && !$ctrl.editPatientFlag) || $ctrl.readmitFlag || $ctrl.editAdmitFlag"
+                            tabindex="5" />
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.firstName.$touched">
+                            <label ng-if="$ctrl.form.firstName.$error.required" class="has-error">First Name is required!</label>
+                        </div>
+                    </td>
+                    <td ng-if="!$ctrl.editPatientFlag" style="width: 30px">&nbsp;</td>
+                    <td ng-if="!$ctrl.editPatientFlag">
+                        <facility-department-list patient="$ctrl.patient" on-update="$ctrl.updateObject(patient, prop, value)"></facility-department-list>
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.facility.$touched">
+                            <label ng-if="$ctrl.form.facility.$error.required" class="has-error">Facility is required!
+                            </label>
+                        </div>
+                    </td>                   
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Birth Date
+                            <span style="color:red">*</span>
+                        </label>
+                        <p class="input-group">
+                            <input type="text" name="birthDate" class="form-control" placeholder="Birth Date" uib-datepicker-popup="{{$root.format}}" ng-model="$ctrl.patient.birthDt"
+                                is-open="$root.popup1.opened" datepicker-options="$root.birthDateOptions" required close-text="Close" ng-disabled="($ctrl.existingPatientFlag && !$ctrl.editPatientFlag) || $ctrl.readmitFlag || $ctrl.editAdmitFlag"
+                                tabindex="6" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default dp-btn" ng-click="$root.open1()">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>
+                        <div ng-show="$ctrl.form.$submitted || $ctrl.form.birthDate.$touched">
+                            <label ng-if="$ctrl.form.birthDate.$error.required" class="has-error">Birth Date is required!
+                            </label>
+                            <label ng-if="$ctrl.form.birthDate.$error.date" class="has-error">Birth Date is Invalid!</label>
+                        </div>
+                    </td>    
+                    <td ng-if="!$ctrl.editPatientFlag" style="width: 30px">&nbsp;</td>
+                    <td ng-if="!$ctrl.editPatientFlag">                        
+                        <label>Department <span style="color:red">*</span></label>
+						<select ng-model="$ctrl.patient.department" name="department" class="form-control"
+						        on-update="$ctrl.update('department', value)" required tabindex="9"						        
+						        ng-change="$ctrl.showSelectedDepartment(department)"        
+						        ng-options="department.id as department.label for department in $ctrl.patient.departments">          
+						        <option value="" disabled selected>Department</option>        
+						 </select>						                        
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.department.$touched">
+                            <label ng-if="$ctrl.form.department.$error.required" class="has-error">Department is required!
+                            </label>
+                        </div>
+                    </td>                   
+                </tr>
+                <tr ng-if="!$ctrl.editPatientFlag">
+                    <td>&nbsp;</td>
+                </tr>
+                <tr ng-if="!$ctrl.editPatientFlag">
+                    <td> <label>ED Referral
+                            <span style="color:red">*</span>
+                        </label>
+                        <div>
+                            <label class="radio-inline">
+                                <input type="radio" name="edRefer" value="Yes" ng-model="$ctrl.patient.edReferCd" ng-required="true" 
+                                    tabindex="2" /> Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="edRefer" value="No" ng-model="$ctrl.patient.edReferCd" ng-required="true" 
+                                    tabindex="3" /> No
+                            </label>
+                        </div>
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.edRefer.$touched">
+                            <label ng-if="$ctrl.form.edRefer.$error.required" class="has-error">ED Referral is required!
+                            </label>
+                        </div>
+                        
+                        <label> Referring Facility 
+                            
+                        </label>
+                         <div>
+                        <select ng-model="$ctrl.patient.edfacility" name="edfacility" class="form-control"
+          tabindex="11"
+      	ng-required="$ctrl.patient.edReferCd == 'Yes'" 
+        ng-options="facility.id as facility.label for facility in $ctrl.facilities">        
+        <option value="" disabled selected>Facility</option>
+		</select>
+                        </div>
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.edfacility.$touched">
+                            <label ng-if="$ctrl.form.edfacility.$error.required" class="has-error">Facility is required!
+                            </label>
+                        </div>
+                        </td>
+                    <td style="width: 30px">&nbsp;</td>
+                    <td>
+                        <physician-list patient="$ctrl.patient" on-update="$ctrl.updateObject(patient, prop, value)"></physician-list>
+                        <div ng-if="$ctrl.form.$submitted || $ctrl.form.referringPhysician.$touched">
+                            <label ng-if="$ctrl.form.referringPhysician.$error.required" class="has-error">Referring Physician is required!</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="!$ctrl.editPatientFlag">
+                    <td>&nbsp;</td>
+                </tr>              
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="submit-btn-group">
+                <button class="btn btn-primary" type="submit" ng-click="$ctrl.savePatientAndAdmit()" ng-disabled="($ctrl.submitBtnDisabled || $ctrl.existingPatientFlag) && !$ctrl.adtPatient"
+                    tabindex="13">
+                    Submit
+                </button>
+                <button class="btn btn-danger" type="button" ng-click="$ctrl.openDeleteAdmitModal($ctrl.patient.admitId)" ng-if="$ctrl.editAdmitFlag"
+                    tabindex="14">
+                    Delete
+                </button>
+                <button class="btn btn-default" type="button" ng-if="!$ctrl.editPatientFlag && !$ctrl.editAdmitFlag && !$ctrl.readmitFlag" ng-click="$ctrl.reset()"
+                    tabindex="15">
+                    Reset
+                </button>
+                <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()" tabindex="16">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>-->

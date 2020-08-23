@@ -1,0 +1,175 @@
+
+<!--  <div class="patient-summary-container">
+    <div class="sidebar-container">
+        <div>
+            <button class="btn btn-primary min-btn-width" ng-click="vm.backToSearch()">
+                <i class="glyphicon glyphicon-chevron-left" style="margin-right: 3px;" aria-hidden="true"></i>Search
+            </button>
+        </div>
+        <div class="patient-summary-info">
+            <table class="table">
+                <tr>
+                    <td>Name: <a ng-click="vm.editPatient()" title="Edit Patient"><b>{{vm.patient.lastNm}}, {{vm.patient.firstNm}}</b></a></td>
+                </tr>
+                <tr>
+                    <td>Patient MRN: <b>{{ vm.patient.empi }}</b></td>
+                </tr>
+                <tr>
+                    <td>DOB: <b>{{vm.patient.birthDtStr}}</b></td>
+                </tr>
+                <tr>
+                    <td>Sex: <b>{{vm.patient.sexCd === "1" ? "Male" : "Female"}}</b></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="patient-summary-content">
+        <div class="admissions-heading-container">
+            <h2 class="patient-summary-heading" >Admissions</h2>
+            <button class="btn btn-default min-btn-width" ng-click="vm.readmit()">
+                <i class="glyphicon glyphicon-repeat header-icon" aria-hidden="true"></i>ReAdmit
+            </button>
+        </div>
+        <table class="table table-bordered table-hover patient-table-header">
+            <thead>
+                <tr>
+                    <th class="radio-btn-col"></th>
+                    <th class="admit-date"><b>Admit Date</b></th>
+                    <th class="admit-dept"><b>Facility</b></th>
+                    <th class="admit-acct"><b>FIN#</b></th>
+                    <th class="admit-discharge"><b>Discharge Date</b></th>
+                    <th class="admit-therapist"><b>Therapist</b></th>
+                </tr>
+            </thead>
+        </table>
+        <div class="admissions-table-container">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                    <tr ng-repeat="admit in vm.patient.admits"
+                        ng-class="{'selected':$index == vm.selectedRow, 'disabled' :addInviteesDisabled()}">
+                        <td class="radio-btn-col" align="center"><input type="radio" name="admit" ng-click="vm.updateDetails(admit); vm.setClickedRow($index);"
+                                ng-model="vm.admitId"
+                                ng-value="admit.admitId"
+                                ng-init="$index==0?(vm.admitId=admit.admitId):''"/>
+                        </td>
+                        <td class="admit-date"><a ng-click="vm.editAdmit(admit)" title="View/Edit/Delete Admit">{{admit.admitDt}}</a></td>
+                        <td class="admit-dept">{{admit.facilityName}}</td>
+                        <td class="admit-acct">{{admit.acctNo &gt; 0 ? admit.acctNo : ''}}</td>
+                        <td class="admit-discharge" ng-if="admit.dischargeDate != null"><a ng-click="vm.openDischargeModal(admit)" title="Edit Discharge">{{admit.dischargeDate}}</a></td>
+                        <td class="admit-discharge" ng-if="admit.dischargeDate == null"><a ng-click="vm.openDischargeModal(admit)" title="Discharge Patient">Review to Discharge</a></td>
+                        <td class="admit-therapist">{{admit.therapistName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="heading-container">
+            <h2 class="patient-summary-heading">Outcome Scores</h2>
+            <div>
+                <button class="btn btn-default min-btn-width" ng-click="vm.openOutcomeModal()">
+                    <i class="glyphicon glyphicon-pencil header-icon" aria-hidden="true"></i>Add Manual Score
+                </button>
+                <button ng-if="vm.showESurvey == true" class="btn btn-default min-btn-width" style="margin-left: 10px;" ng-click="vm.openESurveyModal()">
+                    <i class="glyphicon glyphicon-phone header-icon" aria-hidden="true"></i>Start e-Survey
+                </button>
+                <button class="btn btn-default min-btn-width" style="margin-left: 10px;" ng-click="vm.openComparisonReport()">
+                    <i class="glyphicon glyphicon-object-align-bottom header-icon" aria-hidden="true"></i>Comparison Report
+                </button>
+                <button class="btn btn-default min-btn-width" style="margin-left: 10px;" ng-click="vm.openOutcomesReport()">
+                    <i class="glyphicon glyphicon-stats header-icon" aria-hidden="true"></i>Patient Report
+                </button>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover patient-table-header" >
+            <thead>
+                <tr>
+                    <th rowspan="2" class="icon-col">&nbsp;</th>
+                    <th class="survey-date" rowspan="2"><b>Survey Date</b></th>
+                    <th class="survey-type" rowspan="2"><b>Survey Type</b></th>
+                    <th class="survey-score" rowspan="2"><b>Survey Score</b></th>
+                    <th class="pain-score" rowspan="2"><b>Pain Score</b></th>
+                    <th class="survey-kmod" rowspan="2"><b>K Modifier</b></th>
+                    <th class="survey-startback" rowspan="2"><b>Startback Risk</b></th>
+                    <th colspan="3" style="text-align: center; padding: 3px;"><b>FABQ</b></th>
+                </tr>
+                <tr>
+                    <th class="fabq-activity"><b>Activity Score</b></th>
+                    <th class="fabq-work"><b>Work Score</b></th>
+                    <th class="fabq-total"><b>Total Score</b></th>
+                </tr>
+            </thead>
+        </table>
+        <div class="outcomes-table-container">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                    <tr ng-repeat="survey in vm.surveys">
+                        <td class="icon-col" ng-if="survey.eSurvey != true">
+                            <i title="Manual Score" class="glyphicon glyphicon-pencil completed-outcome-icon" aria-hidden="true"></i>
+                        </td>
+                        <td class="icon-col" ng-if="survey.eSurvey == true">
+                            <i ng-if="survey.eSurvey == true && survey.eSurveySubmittedDate != null" title="Completed e-Survey" class="glyphicon glyphicon-phone completed-outcome-icon" aria-hidden="true"></i>
+                            <i ng-if="survey.eSurvey == true && survey.eSurveySubmittedDate == null" title="Pending e-Survey" class="glyphicon glyphicon-phone pending-outcome-icon" aria-hidden="true"></i>
+                        </td>
+                        <td class="survey-date" ng-if="survey.eSurvey != true">
+                            <a ng-click="vm.openOutcomeModal(survey)" title="View/Edit/Delete Outcome">
+                                {{survey.surveyDateStr}}
+                            </a>
+                        </td>
+                        <td class="survey-date" ng-if="survey.eSurvey == true">
+                            <a ng-if="survey.eSurvey == true && survey.eSurveySubmittedDate != null" ng-click="vm.openSurveyResponses(survey)" title="View/Edit/Delete Outcome">
+                                {{survey.surveyDateStr}}
+                            </a>
+                            <a ng-if="survey.eSurvey == true && survey.eSurveySubmittedDate == null" ng-click="vm.openSurveyResponses(survey)" title="(Pending) View/Edit/Delete Outcome">
+                                {{survey.surveyDateStr}}
+                            </a>
+                        </td>
+                        <td class="survey-type">{{survey.surveyType}}</td>
+                        <td class="survey-score" ng-if="survey.surveyType === 'QDASH'">{{survey.surveyScore | number : 1}}</td>
+                        <td class="survey-score" ng-if="survey.surveyType !== 'QDASH' && survey.surveyType !== 'PFDI' && survey.surveyType !== 'PFIQ'">
+                            {{survey.surveyType !== 'FABQ' ? survey.surveyScore: ''}}
+                        </td>
+                        <td class="survey-score" ng-if="survey.eSurvey === true && (survey.surveyType === 'PFDI' || survey.surveyType === 'PFIQ')">
+                            <subscores-component survey-details="survey"></subscores-component>
+                        </td>
+                        <td class="survey-score" ng-if="survey.eSurvey !== true && (survey.surveyType === 'PFDI' || survey.surveyType === 'PFIQ')">
+                            {{survey.surveyScore}}
+                        </td>
+                        <td class="pain-score">{{(survey.surveyType !== 'FABQ' && survey.surveyType !== 'START') ? survey.painScore : ''}}</td>
+                        <td class="survey-kmod">{{survey.surveyType !== 'FABQ' ? survey.kModifier : ''}}</td>
+                        <td class="survey-startback">{{survey.surveyType === 'START' ? survey.startbackRisk : ''}}</td>
+                        <td class="fabq-activity">{{survey.surveyType === 'FABQ' ? survey.fabqScore1 : ''}}</td>
+                        <td class="fabq-work">{{survey.surveyType === 'FABQ' ? survey.fabqScore2 : ''}}</td>
+                        <td class="fabq-total">{{survey.surveyType === 'FABQ' ? survey.fabqScore1 + survey.fabqScore2 : ''}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="heading-container">
+            <h2 class="patient-summary-heading">Classifications</h2>
+            <button>
+                Hello World
+            </button>-->
+            <!--class="radio-btn-col" align="center" input type="radio" name="filter" ng-click="vm.sortClassifications();" ng-model="vm.admitId" ng-value="admit.admitId" ng-init="$index==0?(vm.admitId=admit.admitId):''" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="571214"-->
+            <!--  <button class="btn btn-default min-btn-width" title="Add New Classification"  ng-click="vm.openClassificationModal()">
+                <i class="glyphicon glyphicon-plus header-icon" aria-hidden="true"></i>New
+            </button>
+        </div>
+        <table class="table table-bordered patient-table-header">
+            <thead>
+                <tr>
+                    <th class="classification-name"><b>Classification</b></th>
+                    <th class="classification-primary"><b>Primary</b></th>
+                </tr>
+            </thead>
+        </table>
+        <div class="classifications-table-container">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                    <tr ng-repeat="classification in vm.classifications">
+                        <td class="classification-name"><a ng-click="vm.openClassificationModal(classification)" title="View/Edit/Delete Classification">{{classification.classificationText}}</a></td>
+                        <td class="classification-primary">{{classification.primaryClassification}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>-->

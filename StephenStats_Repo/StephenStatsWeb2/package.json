@@ -1,0 +1,22 @@
+{
+  "name": "stephen_stats_web2",
+  "version": "1.0.0",
+  "description": "geneology statistics and tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "test-command"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeBlue745/StephenStats.git"
+  },
+  "keywords": [
+    "geneology"
+  ],
+  "author": "Stephen Robbins",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/CodeBlue745/StephenStats/issues"
+  },
+  "homepage": "https://github.com/CodeBlue745/StephenStats#readme"
+}

@@ -1,0 +1,161 @@
+* {
+	background-color: white;
+	font-family: 'Georgia', Arial, sans-serif;
+	color: #000000;
+}
+
+#id{
+	cursor: grab;
+}
+
+.divwrapper{
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 10px;
+	grid-auto-rows: minmax(100px, auto);
+}
+
+.icons{
+	font-size: 37px;
+	position: relative;
+	top: 10%;
+	grid-column: 1;
+  	grid-row: 1;
+}
+
+/* at 12px 20px*/
+.product-name {
+	color: green;
+	font-size: 37px;
+	position: relative;
+	top: 50%;
+	grid-column: 1;
+  	grid-row: 1;
+  	background: #AA2200;
+  	text-outline: #660088
+}
+
+.banner{
+	border-width: 20px;
+	width: 200px;
+	height: 200px;
+	border-style: solid;
+	background: #660088;
+}
+
+.div2{
+	grid-column: 2;
+  	grid-row: 1;
+}
+
+.div3{
+	grid-column: 3;
+  	grid-row: 1;
+}
+
+.links{
+	position: relative;
+	top: 50%;
+	grid-column: 1;
+  	grid-row: 2;
+}
+
+.div5{
+	grid-column: 2;
+  	grid-row: 2;
+}
+
+.div6{
+	grid-column: 3;
+  	grid-row: 2;
+}
+
+.div7{
+	position: relative;
+	grid-column: 1 / 6;
+  	grid-row: 4;
+  	text-align: center;
+}
+
+.div8{
+	position: relative;
+	grid-column: 1 / 6;
+  	grid-row: 5;
+  	text-align: center;
+}
+
+.colored{
+	outline: blue;
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	background-color: white;
+}
+
+/*Stephen Clock*/
+.clockface{
+     width: 200px;
+     height: 200px;
+     border-radius: 50%;
+     border-style: groove ridge ridge groove;
+     border-width: 20px;
+     position: fixed;
+     top: 20px;
+     right: 20px;
+  }
+
+.hourhand{
+	width: 45px;
+    height: 70px;
+    border-style: solid;
+    background: black;
+    position: fixed;
+    top: 70px;
+    right: 110px;
+}
+
+.minutehand{
+	width: 15px;
+    height: 120px;
+    border-style: solid;
+    background: black;
+    position: fixed;
+    top: 20px;
+    right: 125px;
+}
+
+.secondhand{
+	width: 2px;
+    height: 120px;
+    border-style: solid;
+    background: green;
+    position: fixed;
+    top: 20px;
+    right: 131.5px;
+}
+
+.pagebtn{
+	width: 200px;
+	height: 200px;
+}
+
+.error {
+	color: red;
+	font-style: italic;
+}
+
+/*General*/
+p {
+	font-size: normal;
+	font-style: normal;
+}
+
+a:hover {
+	color: gold;
+}
+
+canvas{
+	width: auto;
+	height: auto;
+}
+
